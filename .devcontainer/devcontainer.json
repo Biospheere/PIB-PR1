@@ -1,0 +1,14 @@
+{
+    "name": "PIB-PR1",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/zsh",
+        "java.home": "/usr/local/openjdk-15",
+    },
+    "extensions": [
+        "vscjava.vscode-java-pack",
+        "ms-vsliveshare.vsliveshare"
+    ],
+}
