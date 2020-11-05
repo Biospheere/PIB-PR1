@@ -16,7 +16,7 @@ public class SumTest {
                 i++;
             }
 
-            System.out.println("Summ: " + sum);
+            System.out.println("Sum: " + sum);
             System.out.println("With the sum formula: " + (n * (n + 1) / 2));
         }
     }
