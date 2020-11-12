@@ -19,7 +19,7 @@ public class Artikel {
      */
     public Artikel(int artikelnr, String art, int bestand) {
         if (art == null || art.isBlank()) {
-            throw new IllegalArgumentException("art darf nicht null sein");
+            throw new IllegalArgumentException("Art darf nicht null sein");
         }
         if (artikelnr >= 1000 && artikelnr <= 9999) {
             this.artikelnr = artikelnr;
@@ -79,6 +79,9 @@ public class Artikel {
     }
 
     public void setArt(String art) {
+        if (art == null || art.isBlank()) {
+            throw new IllegalArgumentException("Art darf nicht null sein");
+        }
         this.art = art;
     }
 
