@@ -7,44 +7,53 @@ public class ArtikelTest {
     private Artikel artikel = null;
 
     /**
-     * Methode zum interaktiven Testen der Artikel Klasse 
+     * Methode zum interaktiven Testen der Artikel Klasse
      */
     public void readInput() {
         try (final Scanner scanner = new Scanner(System.in)) {
             while (true) {
-                System.out.print("Command: ");
-                final String input = scanner.nextLine().toLowerCase().trim();
+                final String input = readString(scanner, "Command: ").toLowerCase().trim();
                 if (artikel == null && !input.equalsIgnoreCase("erstellen")) {
                     System.out.println("Es wurde noch kein Artikel mit *erstellen* erstellt!");
                     continue;
                 }
-                try {
-                    switch (input) {
-                        case "erstellen":
-                            artikel = createArtikel(scanner);
-                            break;
-                        case "abgang":
-                            artikel.bucheAbgang(readNumber(scanner, "Betrag: "));
-                            break;
-                        case "zugang":
-                            artikel.bucheZugang(readNumber(scanner, "Betrag: "));
-                            break;
-                        case "art":
-                            artikel.setArt(readString(scanner, "Art: "));
-                            break;
-                        case "ausgeben":
-                            System.out.println(artikel);
-                            break;
-                    }
-                } catch (IllegalArgumentException exception) {
-                    System.out.println("Fehler: " + exception.getMessage());
-                }
+                executeCommand(scanner, input);
             }
         }
     }
 
     /**
+     * Führt den eingebenen Befehl aus
+     * @param scanner das genutzte Scanner Objekt
+     * @param input der eingebene Command
+     */
+    private void executeCommand(final Scanner scanner, String input) {
+        try {
+            switch (input) {
+                case "erstellen":
+                    artikel = createArtikel(scanner);
+                    break;
+                case "abgang":
+                    artikel.bucheAbgang(readNumber(scanner, "Betrag: "));
+                    break;
+                case "zugang":
+                    artikel.bucheZugang(readNumber(scanner, "Betrag: "));
+                    break;
+                case "art":
+                    artikel.setArt(readString(scanner, "Art: "));
+                    break;
+                case "ausgeben":
+                    System.out.println(artikel);
+                    break;
+            }
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Fehler: " + exception.getMessage());
+        }
+    }
+
+    /**
      * Erstellt ein neues Artikel Objekt
+     * 
      * @param scanner das genutzte Scanner Objekt
      * @return das erstellte Artikel Objekt
      */
@@ -57,9 +66,10 @@ public class ArtikelTest {
 
     /**
      * Wartet bis der Nutzer eine Nummer eingegeben hat
+     * 
      * @param scanner
      * @param promtMessage
-     * @return die eingegebene Nummer 
+     * @return die eingegebene Nummer
      */
     private int readNumber(final Scanner scanner, final String promtMessage) {
         System.out.print(promtMessage);
@@ -73,7 +83,7 @@ public class ArtikelTest {
     }
 
     /**
-     * @param scanner das genutzte Scanner Objekt
+     * @param scanner      das genutzte Scanner Objekt
      * @param promtMessage
      * @return der eingegebene String
      */
