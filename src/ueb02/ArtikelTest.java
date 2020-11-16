@@ -6,53 +6,80 @@ public class ArtikelTest {
 
     private Artikel artikel = null;
 
+    /**
+     * Methode zum interaktiven Testen der Artikel Klasse 
+     */
     public void readInput() {
         try (final Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 System.out.print("Command: ");
                 final String input = scanner.nextLine().toLowerCase().trim();
                 if (artikel == null && !input.equalsIgnoreCase("erstellen")) {
+                    System.out.println("Es wurde noch kein Artikel mit *erstellen* erstellt!");
                     continue;
                 }
-                switch (input) {
-                    case "erstellen":
-                        artikel = createArtikel(scanner);
-                        break;
-                    case "abgang":
-                        System.out.print("Betrag: ");
-                        artikel.bucheAbgang(readNumber(scanner));
-                        break;
-                    case "zugang":
-                        System.out.print("Betrag: ");
-                        artikel.bucheZugang(readNumber(scanner));
-                        break;
-                    case "art":
-                        System.out.print("Art: ");
-                        final String art = scanner.nextLine();
-                        artikel.setArt(art);
-                        break;
-                    case "ausgeben":
-                        System.out.println(artikel);
-                        break;
+                try {
+                    switch (input) {
+                        case "erstellen":
+                            artikel = createArtikel(scanner);
+                            break;
+                        case "abgang":
+                            artikel.bucheAbgang(readNumber(scanner, "Betrag: "));
+                            break;
+                        case "zugang":
+                            artikel.bucheZugang(readNumber(scanner, "Betrag: "));
+                            break;
+                        case "art":
+                            artikel.setArt(readString(scanner, "Art: "));
+                            break;
+                        case "ausgeben":
+                            System.out.println(artikel);
+                            break;
+                    }
+                } catch (IllegalArgumentException exception) {
+                    System.out.println("Fehler: " + exception.getMessage());
                 }
             }
         }
     }
 
+    /**
+     * Erstellt ein neues Artikel Objekt
+     * @param scanner das genutzte Scanner Objekt
+     * @return das erstellte Artikel Objekt
+     */
     private Artikel createArtikel(Scanner scanner) {
-        System.out.print("Artikelnummer: ");
-        final int artikelnr = readNumber(scanner);
-        System.out.print("Art: ");
-        final String art = scanner.nextLine();
-        System.out.print("Bestand: ");
-        final int bestand = readNumber(scanner);
+        final int artikelnr = readNumber(scanner, "Artikelnummer: ");
+        final String art = readString(scanner, "Art: ");
+        final int bestand = readNumber(scanner, "Bestand: ");
         return bestand == 0 ? new Artikel(artikelnr, art) : new Artikel(artikelnr, art, bestand);
     }
 
-    private int readNumber(final Scanner scanner) {
+    /**
+     * Wartet bis der Nutzer eine Nummer eingegeben hat
+     * @param scanner
+     * @param promtMessage
+     * @return die eingegebene Nummer 
+     */
+    private int readNumber(final Scanner scanner, final String promtMessage) {
+        System.out.print(promtMessage);
+        while (!scanner.hasNextInt()) {
+            scanner.nextLine();
+            System.out.print(promtMessage);
+        }
         final int number = scanner.nextInt();
         scanner.nextLine();
         return number;
+    }
+
+    /**
+     * @param scanner das genutzte Scanner Objekt
+     * @param promtMessage
+     * @return der eingegebene String
+     */
+    private String readString(final Scanner scanner, final String promtMessage) {
+        System.out.print(promtMessage);
+        return scanner.nextLine();
     }
 
     public static void main(String... args) {
