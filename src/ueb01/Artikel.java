@@ -29,7 +29,7 @@ public class Artikel {
         if (bestand < 0) {
             throw new IllegalArgumentException("Bestand muss größer als 0 sein");
         }
-        this.art = art;
+        this.art = art.trim();
         this.bestand = bestand;
     }
 
@@ -82,7 +82,7 @@ public class Artikel {
         if (art == null || art.isBlank()) {
             throw new IllegalArgumentException("Art darf nicht null sein");
         }
-        this.art = art;
+        this.art = art.trim();
     }
 
     @Override
