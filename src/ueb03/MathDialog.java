@@ -10,13 +10,18 @@ public class MathDialog {
     public void readInput() {
         try (final Scanner scanner = new Scanner(System.in)) {
             while (true) {
-                switch (readString(scanner, "Command: ").toLowerCase().trim()) {
-                    case "teilsumme":
-                        System.out.println(MathFunctions.berechneTeilersumme(readNumber(scanner, "Zahl: ")));
-                        break;
-                    case "isbn":
-                        System.out.println(MathFunctions.berechneChecksummeIsbn(readNumber(scanner, "ISBN-10: ")));
-                        break;
+                try {
+                    switch (readString(scanner, "Command: ").toLowerCase().trim()) {
+                        case "teilsumme":
+                            System.out.println(MathFunctions.berechneTeilersumme(readNumber(scanner, "Zahl: ")));
+                            break;
+                        case "isbn":
+                            System.out.println("Die Prüfziffer ist "
+                                    + MathFunctions.berechneChecksummeIsbn(readNumber(scanner, "ISBN-10: ")));
+                            break;
+                    }
+                } catch (IllegalArgumentException exception) {
+                    System.out.println("Fehler: " + exception.getMessage());
                 }
             }
         }
