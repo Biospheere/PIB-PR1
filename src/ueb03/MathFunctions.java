@@ -2,6 +2,8 @@ package ueb03;
 
 public class MathFunctions {
 
+    private MathFunctions() {}
+
     /**
      * Berechnet die Teilsumme einer Zahl
      * 

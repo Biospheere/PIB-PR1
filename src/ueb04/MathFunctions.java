@@ -2,6 +2,8 @@ package ueb04;
 
 public class MathFunctions {
 
+    private MathFunctions() {}
+
     /**
      * Berechnet die Teilsumme einer Zahl
      * 
@@ -87,8 +89,9 @@ public class MathFunctions {
             throw new IllegalArgumentException("Zahl muss größer als 0 sein");
         }
         for (int a = 1; a <= Math.pow(zahl, 1.0 / 4.0); a++) {
+            final double aPow = Math.pow(a, 4);
             for (int b = 1; b <= Math.cbrt(zahl); b++) {
-                double c = (zahl - (Math.pow(a, 4) + Math.pow(b, 3)));
+                double c = (zahl - (aPow + Math.pow(b, 3)));
                 if (c % Math.sqrt(c) == 0) {
                     return true;
                 }
