@@ -8,6 +8,8 @@ public class MathDialog {
      * Methode zum interaktiven Testen der MathFunctions Klasse
      */
     public void readInput() {
+        System.out.println(
+                "Teilersumme berechnen: teilsumme\nISBN Pruefsumme berechnen: isbn\nNullstelle berechnen: nullstellen\nSumme von Potenzen: potenz\nProgramm beenden: stop");
         try (final Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 try {
@@ -28,6 +30,8 @@ public class MathDialog {
                             System.out.println(result ? "Die angebene Zahl lässt sich als Summe von Potenzen darstellen"
                                     : "Die angebene Zahl lässt sich nicht als Summe von Potenzen darstellen");
                             break;
+                        case "stop":
+                            System.exit(0);
                     }
                 } catch (IllegalArgumentException exception) {
                     System.out.println("Fehler: " + exception.getMessage());
@@ -38,7 +42,7 @@ public class MathDialog {
 
     /**
      * Wartet bis der Nutzer eine Nummer eingegeben hat
-     * 
+     *
      * @param scanner
      * @param promtMessage
      * @return die eingegebene Nummer
@@ -56,7 +60,7 @@ public class MathDialog {
 
     /**
      * Wartet bis der Nutzer einen Double eingegeben hat
-     * 
+     *
      * @param scanner
      * @param promtMessage
      * @return die eingegebene Nummer
