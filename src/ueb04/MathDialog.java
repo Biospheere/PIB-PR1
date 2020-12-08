@@ -12,31 +12,41 @@ public class MathDialog {
                 "Teilersumme berechnen: teilsumme\nISBN Pruefsumme berechnen: isbn\nNullstelle berechnen: nullstellen\nSumme von Potenzen: potenz\nProgramm beenden: stop");
         try (final Scanner scanner = new Scanner(System.in)) {
             while (true) {
-                try {
-                    switch (readString(scanner, "Command: ").toLowerCase().trim()) {
-                        case "teilsumme":
-                            System.out.println(MathFunctions.berechneTeilersumme(readLong(scanner, "Zahl: ")));
-                            break;
-                        case "isbn":
-                            System.out.println("Die Prüfziffer ist "
-                                    + MathFunctions.berechneChecksummeIsbn(readLong(scanner, "ISBN-10: ")));
-                            break;
-                        case "nullstellen":
-                            System.out.println(MathFunctions.berechneNullstellen(readDouble(scanner, "P: "),
-                                    readDouble(scanner, "Q:")));
-                            break;
-                        case "potenz":
-                            boolean result = MathFunctions.istSummeVonPotenzen(readLong(scanner, "Zahl: "));
-                            System.out.println(result ? "Die angebene Zahl lässt sich als Summe von Potenzen darstellen"
-                                    : "Die angebene Zahl lässt sich nicht als Summe von Potenzen darstellen");
-                            break;
-                        case "stop":
-                            System.exit(0);
-                    }
-                } catch (IllegalArgumentException exception) {
-                    System.out.println("Fehler: " + exception.getMessage());
-                }
+                executeCommand(scanner, readString(scanner, "Command: "));
             }
+        }
+    }
+
+    /**
+     * Führt den eingebenen Befehl aus
+     * 
+     * @param scanner das genutzte Scanner Objekt
+     * @param input   der eingebene Command
+     */
+    private void executeCommand(final Scanner scanner, String input) {
+        try {
+            switch (input.toLowerCase().trim()) {
+                case "teilsumme":
+                    System.out.println(MathFunctions.berechneTeilersumme(readLong(scanner, "Zahl: ")));
+                    break;
+                case "isbn":
+                    System.out.println("Die Prüfziffer ist "
+                            + MathFunctions.berechneChecksummeIsbn(readLong(scanner, "ISBN-10: ")));
+                    break;
+                case "nullstellen":
+                    System.out.println(
+                            MathFunctions.berechneNullstellen(readDouble(scanner, "P: "), readDouble(scanner, "Q:")));
+                    break;
+                case "potenz":
+                    boolean result = MathFunctions.istSummeVonPotenzen(readLong(scanner, "Zahl: "));
+                    System.out.println(result ? "Die angebene Zahl lässt sich als Summe von Potenzen darstellen"
+                            : "Die angebene Zahl lässt sich nicht als Summe von Potenzen darstellen");
+                    break;
+                case "stop":
+                    System.exit(0);
+            }
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Fehler: " + exception.getMessage());
         }
     }
 
