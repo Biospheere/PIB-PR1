@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-public class Lager {
+public class LagerArrayList implements LagerImpl {
 
     private final List<Artikel> artikelList;
     private final int maxElements;
 
-    public Lager(int size) {
+    public LagerArrayList(int size) {
         if (size <= 0) {
             throw new IllegalArgumentException("Lager muss größer als 0 sein");
         }
@@ -18,42 +18,48 @@ public class Lager {
         maxElements = size;
     }
 
-    public Lager() {
+    public LagerArrayList() {
         this(10);
     }
 
+    @Override
     public void legeAnArtikel(Artikel artikel) {
         if (isFull()) {
             throw new IllegalArgumentException("Lager ist voll");
         }
-        if (getArtikelByNr(artikel.getArtikelNr()).isPresent()) {
+        if (getArtikelByNr(artikel.getArtikelNr()) != null) {
             throw new IllegalArgumentException(String
                     .format("Der Artikel mit der Nummer %d existiert bereits in dem Lager", artikel.getArtikelNr()));
 
         }
         artikelList.add(artikel);
+        
     }
 
+    @Override
     public void entferneArtikel(int artikelNr) {
         artikelList.removeIf(artikel -> artikel.getArtikelNr() == artikelNr);
     }
 
+    @Override
     public void bucheZugang(int artikelNr, int menge) {
-        Optional<Artikel> optional = getArtikelByNr(artikelNr);
-        if (!optional.isPresent()) {
+        Artikel artikel =  getArtikelByNr(artikelNr);
+        if (artikel == null) {
             throw new NoSuchElementException(String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
         }
-        optional.get().bucheZugang(menge);
+        artikel.bucheZugang(menge);
     }
 
+    @Override
     public void bucheAbgang(int artikelNr, int menge) {
-        Optional<Artikel> optional = getArtikelByNr(artikelNr);
-        if (!optional.isPresent()) {
+        Artikel artikel =  getArtikelByNr(artikelNr);
+        if (artikel == null) {
             throw new NoSuchElementException(String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
         }
-        optional.get().bucheAbgang(menge);
+        artikel.bucheAbgang(menge);
     }
 
+    @Override
     public void aenderePreisAllerArtikel(double prozent) {
         artikelList.forEach(artikel -> {
             double change = (prozent * artikel.getPrice()) / 100;
@@ -64,14 +70,17 @@ public class Lager {
         });
     }
 
+    @Override
     public Artikel getArtikel(int index) {
         return (index >= 0) && (index < artikelList.size()) ? artikelList.get(index) : null;
     }
 
+    @Override
     public int getArtikelAnzahl() {
         return artikelList.size();
     }
 
+    @Override
     public int getLagerGroesse() {
         return maxElements;
     }
@@ -80,8 +89,9 @@ public class Lager {
         return !((artikelList.size()) < maxElements);
     }
 
-    public Optional<Artikel> getArtikelByNr(int artikelNr) {
-        return artikelList.stream().filter(artikel -> artikel.getArtikelNr() == artikelNr).findFirst();
+    public Artikel getArtikelByNr(int artikelNr) {
+        Optional<Artikel> optional = artikelList.stream().filter(artikel -> artikel.getArtikelNr() == artikelNr).findFirst();
+        return optional.isPresent() ? optional.get() : null;
     }
 
     @Override

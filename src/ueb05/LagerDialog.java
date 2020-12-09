@@ -1,11 +1,10 @@
 package ueb05;
 
-import java.util.Optional;
 import java.util.Scanner;
 
 public class LagerDialog {
 
-    private Lager lager = null;
+    private LagerImpl lager = null;
 
     /**
      * Methode zum interaktiven Testen der Artikel Klasse
@@ -41,7 +40,7 @@ public class LagerDialog {
                             break;
                         }
                     }
-                    lager = new Lager(readInt(scanner, "Größe des Lagers: "));
+                    lager = new LagerArray(readInt(scanner, "Größe des Lagers: "));
                     break;
                 case "anlegen":
                     lager.legeAnArtikel(createArtikel(scanner));
@@ -63,9 +62,9 @@ public class LagerDialog {
                     if (mode.equals("index")) {
                         System.out.println(lager.getArtikel(readInt(scanner, "Index: ")));
                     } else if (mode.equals("nummer")) {
-                        Optional<Artikel> artikel = lager.getArtikelByNr(readInt(scanner, "Nummer: "));
-                        if (artikel.isPresent()) {
-                            System.out.println(artikel.get());
+                        Artikel artikel = lager.getArtikelByNr(readInt(scanner, "Nummer: "));
+                        if (artikel != null) {
+                            System.out.println(artikel);
                         } else {
                             System.out.println("Artikel existiert nicht");
                         }
@@ -83,7 +82,7 @@ public class LagerDialog {
                 case "stop":
                     System.exit(0);
             }
-        } catch (IllegalArgumentException exception) {
+        } catch (Exception exception) {
             System.out.println("Fehler: " + exception.getMessage());
         }
     }
