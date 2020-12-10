@@ -1,5 +1,7 @@
 package ueb05;
 
+import java.util.Optional;
+
 public interface LagerImpl {
 
     void legeAnArtikel(Artikel artikel);
@@ -12,13 +14,13 @@ public interface LagerImpl {
 
     void aenderePreisAllerArtikel(double prozent);
 
-    Artikel getArtikel(int index);
+    Optional<Artikel> getArtikel(int index);
 
     int getArtikelAnzahl();
 
     int getLagerGroesse();
 
-    Artikel getArtikelByNr(int artikelNr);
+    Optional<Artikel> getArtikelByNr(int artikelNr);
 
     @Override
     String toString();

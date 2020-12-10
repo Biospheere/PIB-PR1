@@ -1,5 +1,6 @@
 package ueb05;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class LagerDialog {
@@ -59,16 +60,13 @@ public class LagerDialog {
                     break;
                 case "get":
                     final String mode = readString(scanner, "Index/Nummer: ").toLowerCase();
+                    Optional<Artikel> artikel = Optional.empty();
                     if (mode.equals("index")) {
-                        System.out.println(lager.getArtikel(readInt(scanner, "Index: ")));
+                        artikel = lager.getArtikel(readInt(scanner, "Index: "));
                     } else if (mode.equals("nummer")) {
-                        Artikel artikel = lager.getArtikelByNr(readInt(scanner, "Nummer: "));
-                        if (artikel != null) {
-                            System.out.println(artikel);
-                        } else {
-                            System.out.println("Artikel existiert nicht");
-                        }
+                        artikel = lager.getArtikelByNr(readInt(scanner, "Nummer: "));
                     }
+                    System.out.println(artikel.isPresent() ? artikel.get() : "Artikel existiert nicht");
                     break;
                 case "artikelanzahl":
                     System.out.println(lager.getArtikelAnzahl());

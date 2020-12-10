@@ -24,7 +24,7 @@ public class LagerArray implements LagerImpl {
         if (isFull()) {
             throw new IllegalArgumentException("Lager ist voll");
         }
-        if (getArtikelByNr(artikel.getArtikelNr()) != null) {
+        if (getArtikelByNr(artikel.getArtikelNr()).isPresent()) {
             throw new IllegalArgumentException(String
                     .format("Der Artikel mit der Nummer %d existiert bereits in dem Lager", artikel.getArtikelNr()));
 
@@ -34,25 +34,33 @@ public class LagerArray implements LagerImpl {
 
     @Override
     public void entferneArtikel(int artikelNr) {
-        artikelArray = Arrays.stream(artikelArray).filter(artikel -> artikel != null && artikel.getArtikelNr() != artikelNr).toArray(size -> new Artikel[artikelArray.length]);
+        for(int i = 0; i < artikelArray.length; i++){
+            if(artikelArray[i] != null && artikelArray[i].getArtikelNr() == artikelNr){
+                artikelArray[i] = artikelArray[getArtikelAnzahl() - 1];
+                artikelArray[getArtikelAnzahl() - 1] = null;
+            }
+        }
+        /*artikelArray = Arrays.stream(artikelArray)
+                .filter(artikel -> artikel != null && artikel.getArtikelNr() != artikelNr)
+                .toArray(size -> new Artikel[artikelArray.length]);*/
     }
 
     @Override
     public void bucheZugang(int artikelNr, int menge) {
-        Artikel artikel = getArtikelByNr(artikelNr);
-        if (artikel == null) {
+        Optional<Artikel> artikel = getArtikelByNr(artikelNr);
+        if (artikel.isEmpty()) {
             throw new NoSuchElementException(String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
         }
-        artikel.bucheZugang(menge);
+        artikel.get().bucheZugang(menge);
     }
 
     @Override
     public void bucheAbgang(int artikelNr, int menge) {
-        Artikel artikel = getArtikelByNr(artikelNr);
-        if (artikel == null) {
+        Optional<Artikel> artikel = getArtikelByNr(artikelNr);
+        if (artikel.isEmpty()) {
             throw new NoSuchElementException(String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
         }
-        artikel.bucheAbgang(menge);
+        artikel.get().bucheAbgang(menge);
     }
 
     @Override
@@ -74,8 +82,12 @@ public class LagerArray implements LagerImpl {
     }
 
     @Override
-    public Artikel getArtikel(int index) {
-        return artikelArray[index];
+    public Optional<Artikel> getArtikel(int index) {
+        Artikel artikel = artikelArray[index];
+        if (artikel == null) {
+            return Optional.empty();
+        }
+        return Optional.of(artikel);
     }
 
     @Override
@@ -93,14 +105,13 @@ public class LagerArray implements LagerImpl {
     }
 
     @Override
-    public Artikel getArtikelByNr(int artikelNr) {
+    public Optional<Artikel> getArtikelByNr(int artikelNr) {
         /*
          * for(Artikel artikel : artikelArray){ if(artikel.getArtikelNr() == artikelNr){
          * return artikel; } } return null;
          */
-        Optional<Artikel> optional = Arrays.asList(artikelArray).stream()
+        return Arrays.asList(artikelArray).stream()
                 .filter(artikel -> artikel != null && artikel.getArtikelNr() == artikelNr).findFirst();
-        return optional.isPresent() ? optional.get() : null;
     }
 
     public boolean isFull() {
@@ -113,12 +124,6 @@ public class LagerArray implements LagerImpl {
         Arrays.asList(artikelArray).stream().filter(artikel -> artikel != null)
                 .forEach(artikel -> stringBuilder.append(artikel + "\n"));
         return stringBuilder.toString();
-    }
-
-    public static void main(String... args) {
-        LagerImpl lager = new LagerArray(10);
-        System.out.println(lager.getArtikelAnzahl());
-        System.out.println(lager.getArtikel(3));
     }
 
 }

@@ -43,20 +43,20 @@ public class LagerArrayList implements LagerImpl {
 
     @Override
     public void bucheZugang(int artikelNr, int menge) {
-        Artikel artikel =  getArtikelByNr(artikelNr);
-        if (artikel == null) {
+        Optional<Artikel> artikel =  getArtikelByNr(artikelNr);
+        if (artikel.isEmpty()) {
             throw new NoSuchElementException(String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
         }
-        artikel.bucheZugang(menge);
+        artikel.get().bucheZugang(menge);
     }
 
     @Override
     public void bucheAbgang(int artikelNr, int menge) {
-        Artikel artikel =  getArtikelByNr(artikelNr);
-        if (artikel == null) {
+        Optional<Artikel> artikel =  getArtikelByNr(artikelNr);
+        if (artikel.isEmpty()) {
             throw new NoSuchElementException(String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
         }
-        artikel.bucheAbgang(menge);
+        artikel.get().bucheAbgang(menge);
     }
 
     @Override
@@ -71,8 +71,11 @@ public class LagerArrayList implements LagerImpl {
     }
 
     @Override
-    public Artikel getArtikel(int index) {
-        return (index >= 0) && (index < artikelList.size()) ? artikelList.get(index) : null;
+    public Optional<Artikel> getArtikel(int index) {
+        if((index >= 0) && (index < artikelList.size())){
+            return Optional.of(artikelList.get(index));
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -89,9 +92,9 @@ public class LagerArrayList implements LagerImpl {
         return !((artikelList.size()) < maxElements);
     }
 
-    public Artikel getArtikelByNr(int artikelNr) {
-        Optional<Artikel> optional = artikelList.stream().filter(artikel -> artikel.getArtikelNr() == artikelNr).findFirst();
-        return optional.isPresent() ? optional.get() : null;
+    @Override
+    public Optional<Artikel> getArtikelByNr(int artikelNr) {
+        return artikelList.stream().filter(artikel -> artikel != null && artikel.getArtikelNr() == artikelNr).findFirst();
     }
 
     @Override
