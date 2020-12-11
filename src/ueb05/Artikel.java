@@ -34,9 +34,9 @@ public class Artikel {
             throw new IllegalArgumentException("Preis muss größer als 0 sein");
         }
         this.artikelnr = artikelnr;
-        this.art = art.trim();
         this.bestand = bestand;
-        this.price = price;
+        setArt(art);
+        setPrice(price);
     }
 
     public Artikel(int artikelnr, String art, double price) {
@@ -97,7 +97,7 @@ public class Artikel {
         if (price <= 0) {
             throw new IllegalArgumentException("Preis muss größer als 0 sein");
         }
-        this.price = price;
+        this.price = Math.round(price * 100.0) / 100.0;
     }
 
     public int getArtikelNr() {

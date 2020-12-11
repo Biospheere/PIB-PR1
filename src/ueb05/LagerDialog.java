@@ -79,6 +79,8 @@ public class LagerDialog {
                     break;
                 case "stop":
                     System.exit(0);
+                default:
+                    System.out.printf("Der Befehl %s existiert nicht\n", input);
             }
         } catch (Exception exception) {
             System.out.println("Fehler: " + exception.getMessage());
@@ -96,7 +98,7 @@ public class LagerDialog {
         final String art = readString(scanner, "Art: ");
         final int bestand = readInt(scanner, "Bestand: ");
         final double price = readDouble(scanner, "Preis: ");
-        return bestand == 0 ? new Artikel(artikelnr, art, price) : new Artikel(artikelnr, art, bestand, price);
+        return new Artikel(artikelnr, art, bestand, price);
     }
 
     /**
