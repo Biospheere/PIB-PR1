@@ -13,7 +13,7 @@ public class ArtikelDialog {
         try (final Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 final String input = readString(scanner, "Command: ").toLowerCase().trim();
-                if (artikel == null && !input.equalsIgnoreCase("erstellen")) {
+                if (artikel == null && !input.equalsIgnoreCase("erstellen") && !input.equalsIgnoreCase("stop")) {
                     System.out.println("Es wurde noch kein Artikel mit *erstellen* erstellt!");
                     continue;
                 }
@@ -54,6 +54,8 @@ public class ArtikelDialog {
                 case "ausgeben":
                     System.out.println(artikel);
                     break;
+                case "stop":
+                    System.exit(0);
             }
         } catch (IllegalArgumentException exception) {
             System.out.println("Fehler: " + exception.getMessage());

@@ -19,6 +19,8 @@ public class MathDialog {
                             System.out.println("Die Prüfziffer ist "
                                     + MathFunctions.berechneChecksummeIsbn(readNumber(scanner, "ISBN-10: ")));
                             break;
+                        case "stop":
+                            System.exit(0);
                     }
                 } catch (IllegalArgumentException exception) {
                     System.out.println("Fehler: " + exception.getMessage());
