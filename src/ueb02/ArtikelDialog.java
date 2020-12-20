@@ -2,7 +2,7 @@ package ueb02;
 
 import java.util.Scanner;
 
-public class ArtikelTest {
+public class ArtikelDialog {
 
     private Artikel artikel = null;
 
@@ -24,13 +24,22 @@ public class ArtikelTest {
 
     /**
      * Führt den eingebenen Befehl aus
+     * 
      * @param scanner das genutzte Scanner Objekt
-     * @param input der eingebene Command
+     * @param input   der eingebene Command
      */
     private void executeCommand(final Scanner scanner, String input) {
         try {
             switch (input) {
                 case "erstellen":
+                    if (artikel != null) {
+                        final String mode = readString(scanner,
+                                "Soll der aktuelle Artikel überschrieben werden? (Ja/Nein)").toLowerCase();
+                        if (mode.equals("nein") || !mode.equals("ja")) {
+                            System.out.println("Artikel wird nicht überschrieben");
+                            break;
+                        }
+                    }
                     artikel = createArtikel(scanner);
                     break;
                 case "abgang":
@@ -58,10 +67,16 @@ public class ArtikelTest {
      * @return das erstellte Artikel Objekt
      */
     private Artikel createArtikel(Scanner scanner) {
+        final String constructor = readString(scanner,
+                "Soll der Konstruktor mit allen Paramtern genutzt werden? (Ja/Nein): ");
         final int artikelnr = readNumber(scanner, "Artikelnummer: ");
         final String art = readString(scanner, "Art: ");
-        final int bestand = readNumber(scanner, "Bestand: ");
-        return bestand == 0 ? new Artikel(artikelnr, art) : new Artikel(artikelnr, art, bestand);
+        if (constructor.equalsIgnoreCase("Ja")) {
+            final int bestand = readNumber(scanner, "Bestand: ");
+            return new Artikel(artikelnr, art, bestand);
+        } else {
+            return new Artikel(artikelnr, art);
+        }
     }
 
     /**
@@ -93,7 +108,7 @@ public class ArtikelTest {
     }
 
     public static void main(String... args) {
-        new ArtikelTest().readInput();
+        new ArtikelDialog().readInput();
     }
 
 }
