@@ -4,7 +4,7 @@ Einmal mit einem Array und einmal mit einer ArrayList.
 Der Rückgabewert bei getArtikel ist ein Optional anstatt Artikel!
 ```
 
-**5. Übung zu Programmierung 1 Abgabe: KW 1**
+**5. Übung zu Programmierung**
 **1. Aufgabe**
 
 Erstellen Sie ergänzend zur 1. und 2. Übung eine Klasse Lager zum Verwalten von mehreren Artikeln.
