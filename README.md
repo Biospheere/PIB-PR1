@@ -9,6 +9,8 @@ Enhält Abgabecode für die jeweiligen Übungen
 1. [Übung 3](src/ueb03)
 1. [Übung 4](src/ueb04)
 1. [Übung 5](src/ueb05)
+1. [Übung 6](src/ueb06)
+
 
 
 <p align="center">
