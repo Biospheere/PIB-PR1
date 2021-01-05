@@ -14,6 +14,11 @@ public class LinkFilter {
           "<a[^>]+href=[\\\"'](.+?)[\\\"'>]+[\\\"']?[^>]*>(.+?)<\\/a>",
           Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 
+  /**
+   * Filter <code>input</code> for hyperlink a tags
+   *
+   * @param input the text to filter
+   */
   public void filterLinks(String input) {
     final Matcher pageMatcher = PATTERN.matcher(input);
     while (pageMatcher.find()) {
@@ -21,6 +26,7 @@ public class LinkFilter {
     }
   }
 
+  /** @param args the files to filter */
   public static void main(String... args) {
     final LinkFilter linkFilter = new LinkFilter();
     for (String filename : args) {
