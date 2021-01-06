@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,11 +22,13 @@ public class LinkFilter {
    *
    * @param input the text to filter
    */
-  public static void filterLinks(String input) {
+  public static Map<String, String> filterLinks(String input) {
     final Matcher pageMatcher = PATTERN.matcher(input);
+    final Map<String, String> links = new HashMap<>();
     while (pageMatcher.find()) {
-      System.out.println(pageMatcher.group(1) + ":" + pageMatcher.group(2));
+      links.put(pageMatcher.group(1), pageMatcher.group(2));
     }
+    return links;
   }
 
   /**
@@ -48,6 +52,10 @@ public class LinkFilter {
     Arrays.asList(args).stream()
         .map(m -> getFileContent(m))
         .filter(input -> input != null)
-        .forEach(input -> filterLinks(input));
+        .map(input -> filterLinks(input))
+        .forEach(
+            action -> {
+              action.forEach((k, v) -> System.out.println(k + ":" + v));
+            });
   }
 }
