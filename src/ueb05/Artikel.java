@@ -73,6 +73,15 @@ public class Artikel {
     bestand -= menge;
   }
 
+  /** @param prozent der Prozentsatz um den der Preis geändert werden soll */
+  public void aenderePreis(double prozent) {
+    double change = (prozent * getPrice()) / 100;
+    double price = getPrice() + change;
+    if (price > 0) {
+      setPrice(price);
+    }
+  }
+
   /**
    * Ändert die Art des Artikels
    *
