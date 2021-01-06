@@ -38,7 +38,11 @@ public class LagerArrayList implements LagerImpl {
 
   @Override
   public void entferneArtikel(int artikelNr) {
-    artikelList.removeIf(artikel -> artikel.getArtikelNr() == artikelNr);
+    boolean removed = artikelList.removeIf(artikel -> artikel.getArtikelNr() == artikelNr);
+    if (!removed) {
+      throw new NoSuchElementException(
+          String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
+    }
   }
 
   @Override
@@ -65,11 +69,7 @@ public class LagerArrayList implements LagerImpl {
   public void aenderePreisAllerArtikel(double prozent) {
     artikelList.forEach(
         artikel -> {
-          double change = (prozent * artikel.getPrice()) / 100;
-          double price = artikel.getPrice() + change;
-          if (price > 0) {
-            artikel.setPrice(price);
-          }
+          artikel.aenderePreis(prozent);
         });
   }
 

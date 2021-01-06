@@ -39,11 +39,11 @@ public class LagerArray implements LagerImpl {
       if (artikelArray[i] != null && artikelArray[i].getArtikelNr() == artikelNr) {
         artikelArray[i] = artikelArray[getArtikelAnzahl() - 1];
         artikelArray[getArtikelAnzahl() - 1] = null;
+        return;
       }
     }
-    /*artikelArray = Arrays.stream(artikelArray)
-    .filter(artikel -> artikel != null && artikel.getArtikelNr() != artikelNr)
-    .toArray(size -> new Artikel[artikelArray.length]);*/
+    throw new NoSuchElementException(
+        String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
   }
 
   @Override
@@ -68,21 +68,11 @@ public class LagerArray implements LagerImpl {
 
   @Override
   public void aenderePreisAllerArtikel(double prozent) {
-    /*
-     * for (Artikel artikel : artikelArray) { if (artikel != null) { double change =
-     * (prozent * artikel.getPrice()) / 100; double price = artikel.getPrice() +
-     * change; if (price > 0) { artikel.setPrice(price); } } }
-     */
-
-    Arrays.asList(artikelArray)
-        .forEach(
-            artikel -> {
-              double change = (prozent * artikel.getPrice()) / 100;
-              double price = artikel.getPrice() + change;
-              if (price > 0) {
-                artikel.setPrice(price);
-              }
-            });
+    for (Artikel artikel : artikelArray) {
+      if (artikel != null) {
+        artikel.aenderePreis(prozent);
+      }
+    }
   }
 
   @Override
