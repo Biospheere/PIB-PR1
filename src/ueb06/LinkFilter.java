@@ -5,30 +5,24 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LinkFilter {
 
   private static final Pattern PATTERN =
-      Pattern.compile(
-          "<a[^>]+href=[\\\"'](.+?)[\\\"'>]+[\\\"']?[^>]*>(.+?)<\\/a>",
-          Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+      Pattern.compile("<a[^>]+href=[\"'](.+?)\"[^>]*>(.+?)<\\/a>", Pattern.CASE_INSENSITIVE);
 
   /**
    * Filter <code>input</code> for hyperlink a tags
    *
    * @param input the text to filter
    */
-  public static Map<String, String> filterLinks(String input) {
-    final Matcher pageMatcher = PATTERN.matcher(input);
-    final Map<String, String> links = new HashMap<>();
-    while (pageMatcher.find()) {
-      links.put(pageMatcher.group(1), pageMatcher.group(2));
+  public static void filterLinks(String input) {
+    final Matcher matcher = PATTERN.matcher(input);
+    while (matcher.find()) {
+      System.out.println(matcher.group(1) + ":" + matcher.group(2));
     }
-    return links;
   }
 
   /**
@@ -52,10 +46,6 @@ public class LinkFilter {
     Arrays.asList(args).stream()
         .map(m -> getFileContent(m))
         .filter(input -> input != null)
-        .map(input -> filterLinks(input))
-        .forEach(
-            action -> {
-              action.forEach((k, v) -> System.out.println(k + ":" + v));
-            });
+        .forEach(input -> filterLinks(input));
   }
 }
