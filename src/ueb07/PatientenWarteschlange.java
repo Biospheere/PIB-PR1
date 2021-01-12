@@ -72,12 +72,10 @@ public class PatientenWarteschlange {
   @Override
   public String toString() {
     final StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("Warteliste\nPnr     Name\n");
+    stringBuilder.append("Warteliste\n Pnr Name\n");
     Arrays.asList(warteliste).stream()
         .filter(patient -> patient != null)
-        .forEach(
-            patient ->
-                stringBuilder.append(patient.getNumber() + "    " + patient.getName() + "\n"));
+        .forEach(patient -> stringBuilder.append(patient + "\n"));
     return stringBuilder.toString();
   }
 }
