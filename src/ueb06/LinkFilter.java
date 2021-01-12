@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class LinkFilter {
 
   private static final Pattern PATTERN =
-      Pattern.compile("<a[^>]+href=[\"'](.+?)\"[^>]*>(.+?)<\\/a>", Pattern.CASE_INSENSITIVE);
+      Pattern.compile("<a[^>]+href=[\"'](.+?)[\"'][^>]*>(.+?)<\\/a>", Pattern.CASE_INSENSITIVE);
 
   /**
    * Filter <code>input</code> for hyperlink a tags
