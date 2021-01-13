@@ -30,8 +30,7 @@ public class PatientenWarteschlange {
     for (int i = 0; i < warteliste.length; i++) {
       if (warteliste[i] != null && warteliste[i].getNumber() == number) {
         Patient patient = warteliste[i];
-        warteliste[i] = warteliste[getPatientenAnzahl() - 1];
-        warteliste[getPatientenAnzahl() - 1] = null;
+        warteliste[i] = null;
         return patient;
       }
     }
