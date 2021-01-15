@@ -42,4 +42,3 @@ public class Patient {
     return number + " " + name;
   }
 }
-
