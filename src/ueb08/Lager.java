@@ -6,18 +6,16 @@ import java.util.NoSuchElementException;
 public class Lager {
 
   private Artikel[] artikelArray;
-  private String ort;
 
-  public Lager(int size, String ort) {
+  public Lager(int size) {
     if (size <= 0) {
       throw new IllegalArgumentException("Lager muss größer als 0 sein");
     }
-    setLagerOrt(ort);
     artikelArray = new Artikel[size];
   }
 
-  public Lager(String ort) {
-    this(10, ort);
+  public Lager() {
+    this(10);
   }
 
   public void legeAnArtikel(Artikel artikel) {
@@ -90,17 +88,6 @@ public class Lager {
     return artikelArray.length;
   }
 
-  public String getLagerOrt() {
-    return ort;
-  }
-
-  public void setLagerOrt(String ort) {
-    if (ort == null || ort.trim().isBlank()) {
-      throw new IllegalArgumentException("Art darf nicht null sein");
-    }
-    this.ort = ort.trim();
-  }
-
   public Artikel getArtikelByNr(int artikelNr) {
     for (Artikel artikel : artikelArray) {
       if (artikel != null && artikel.getArtikelNr() == artikelNr) {
@@ -115,8 +102,7 @@ public class Lager {
   }
 
   public void ausgebenBestandsListe() {
-    StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("Lagerort: " + ort + "\n");
+    final StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("Artnr Beschreibung Preis Bestand Gesamt\n");
     double sumPrice = 0;
     for (Artikel artikel : artikelArray) {
@@ -138,7 +124,7 @@ public class Lager {
 
   @Override
   public String toString() {
-    StringBuilder stringBuilder = new StringBuilder();
+    final StringBuilder stringBuilder = new StringBuilder();
     Arrays.asList(artikelArray).stream()
         .filter(artikel -> artikel != null)
         .forEach(artikel -> stringBuilder.append(artikel + "\n"));
