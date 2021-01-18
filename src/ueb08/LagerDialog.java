@@ -11,7 +11,8 @@ public class LagerDialog {
     try (final Scanner scanner = new Scanner(System.in)) {
       while (true) {
         final String input = readString(scanner, "Command: ").toLowerCase().trim();
-        if (lager == null && (!input.equalsIgnoreCase("erstellen") && !input.equalsIgnoreCase("stop"))) {
+        if (lager == null
+            && (!input.equalsIgnoreCase("erstellen") && !input.equalsIgnoreCase("stop"))) {
           System.out.println("Es wurde noch kein Lager mit *erstellen* erstellt!");
           continue;
         }
@@ -24,21 +25,24 @@ public class LagerDialog {
    * Führt den eingebenen Befehl aus
    *
    * @param scanner das genutzte Scanner Objekt
-   * @param input   der eingebene Command
+   * @param input der eingebene Command
    */
   private void executeCommand(final Scanner scanner, String input) {
     try {
       switch (input) {
         case "erstellen":
           if (lager != null) {
-            final String mode = readString(scanner, "Soll das aktuelle Lager überschrieben werden? (Ja/Nein)")
-                .toLowerCase();
+            final String mode =
+                readString(scanner, "Soll das aktuelle Lager überschrieben werden? (Ja/Nein)")
+                    .toLowerCase();
             if (mode.equals("nein") || !mode.equals("ja")) {
               System.out.println("Lager wird nicht überschrieben");
               break;
             }
           }
-          lager = new Lager(readInt(scanner, "Größe des Lagers: "), readString(scanner, "Ort des Lagers: "));
+          lager =
+              new Lager(
+                  readInt(scanner, "Größe des Lagers: "), readString(scanner, "Ort des Lagers: "));
           break;
         case "anlegen":
           lager.legeAnArtikel(createArtikel(scanner));
@@ -159,7 +163,7 @@ public class LagerDialog {
   }
 
   /**
-   * @param scanner      das genutzte Scanner Objekt
+   * @param scanner das genutzte Scanner Objekt
    * @param promtMessage
    * @return der eingegebene String
    */

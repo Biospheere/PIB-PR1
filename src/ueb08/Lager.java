@@ -26,7 +26,9 @@ public class Lager {
     }
     if (getArtikelByNr(artikel.getArtikelNr()) != null) {
       throw new IllegalArgumentException(
-          String.format("Der Artikel mit der Nummer %d existiert bereits in dem Lager", artikel.getArtikelNr()));
+          String.format(
+              "Der Artikel mit der Nummer %d existiert bereits in dem Lager",
+              artikel.getArtikelNr()));
     }
     artikelArray[getArtikelAnzahl()] = artikel;
   }
@@ -39,13 +41,15 @@ public class Lager {
         return;
       }
     }
-    throw new NoSuchElementException(String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
+    throw new NoSuchElementException(
+        String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
   }
 
   public void bucheZugang(int artikelNr, int menge) {
     Artikel artikel = getArtikelByNr(artikelNr);
     if (artikel == null) {
-      throw new NoSuchElementException(String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
+      throw new NoSuchElementException(
+          String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
     }
     artikel.bucheZugang(menge);
   }
@@ -53,7 +57,8 @@ public class Lager {
   public void bucheAbgang(int artikelNr, int menge) {
     Artikel artikel = getArtikelByNr(artikelNr);
     if (artikel == null) {
-      throw new NoSuchElementException(String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
+      throw new NoSuchElementException(
+          String.format("Der Artikel mit der Nummer %d existiert nicht", artikelNr));
     }
     artikel.bucheAbgang(menge);
   }
@@ -111,13 +116,20 @@ public class Lager {
 
   public void ausgebenBestandsListe() {
     StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("Lagerort: " + ort + "\n"); 
+    stringBuilder.append("Lagerort: " + ort + "\n");
     stringBuilder.append("Artnr Beschreibung Preis Bestand Gesamt\n");
     double sumPrice = 0;
-    for(Artikel artikel : artikelArray){
-      if(artikel != null){
+    for (Artikel artikel : artikelArray) {
+      if (artikel != null) {
         sumPrice += artikel.getBestand() * artikel.getPrice();
-        stringBuilder.append(String.format("%d %s %f %d %f\n", artikel.getArtikelNr(), artikel.getArt(), artikel.getPrice(), artikel.getBestand(), artikel.getBestand() * artikel.getPrice()));
+        stringBuilder.append(
+            String.format(
+                "%d %s %f %d %f\n",
+                artikel.getArtikelNr(),
+                artikel.getArt(),
+                artikel.getPrice(),
+                artikel.getBestand(),
+                artikel.getBestand() * artikel.getPrice()));
       }
     }
     stringBuilder.append("Gesamtwer: " + sumPrice);
@@ -127,7 +139,8 @@ public class Lager {
   @Override
   public String toString() {
     StringBuilder stringBuilder = new StringBuilder();
-    Arrays.asList(artikelArray).stream().filter(artikel -> artikel != null)
+    Arrays.asList(artikelArray).stream()
+        .filter(artikel -> artikel != null)
         .forEach(artikel -> stringBuilder.append(artikel + "\n"));
     return stringBuilder.toString();
   }

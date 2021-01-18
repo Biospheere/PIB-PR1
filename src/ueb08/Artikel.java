@@ -124,12 +124,13 @@ public class Artikel {
     return price;
   }
 
-  public String getBeschreibung(){
+  public String getBeschreibung() {
     return art;
   }
 
   @Override
   public String toString() {
-    return String.format("Artikel: %d Art: %s Bestand: %d Preis: %f ", artikelnr, art, bestand,price);
+    return String.format(
+        "Artikel: %d Art: %s Bestand: %d Preis: %f ", artikelnr, art, bestand, price);
   }
 }
