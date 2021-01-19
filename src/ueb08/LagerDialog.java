@@ -40,9 +40,7 @@ public class LagerDialog {
               break;
             }
           }
-          lager =
-              new Lager(
-                  readInt(scanner, "Größe des Lagers: "));
+          lager = new Lager(readInt(scanner, "Größe des Lagers: "));
           break;
         case "anlegen":
           lager.legeAnArtikel(createArtikel(scanner));
