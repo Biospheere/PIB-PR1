@@ -53,11 +53,12 @@ public class PatientenWarteschlange {
           String.format("Der Patient mit der Nummer %d existiert nicht", number));
     }
     Patient patient = getPatientByNr(number);
-    for (int i = index; i < warteliste.length; i++) {
+    for (int i = index; i < warteliste.length - 1; i++) {
       if (warteliste[i] != null) {
         warteliste[i] = warteliste[i + 1];
       }
     }
+    warteliste[warteliste.length - 1] = null;
     if (getPatientenAnzahl() == 0) {
       System.out.println("Die Warteschlange ist jetzt leer");
     }

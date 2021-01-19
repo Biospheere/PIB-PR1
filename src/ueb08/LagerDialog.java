@@ -42,7 +42,7 @@ public class LagerDialog {
           }
           lager =
               new Lager(
-                  readInt(scanner, "Größe des Lagers: "), readString(scanner, "Ort des Lagers: "));
+                  readInt(scanner, "Größe des Lagers: "));
           break;
         case "anlegen":
           lager.legeAnArtikel(createArtikel(scanner));
