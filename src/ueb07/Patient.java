@@ -14,7 +14,7 @@ public class Patient {
    * @param name der Name des Patienten
    */
   public Patient(int number, String name) {
-    if (number < MIN && number > MAX) {
+    if (number < MIN || number > MAX) {
       throw new IllegalArgumentException("Die Patientennummer muss vierstellig sein");
     }
     this.number = number;
