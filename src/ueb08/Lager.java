@@ -112,7 +112,7 @@ public class Lager {
             String.format(
                 "%d %s %f %d %f\n",
                 artikel.getArtikelNr(),
-                artikel.getArt(),
+                artikel.getBeschreibung(),
                 artikel.getPrice(),
                 artikel.getBestand(),
                 artikel.getBestand() * artikel.getPrice()));
@@ -121,6 +121,7 @@ public class Lager {
     stringBuilder.append("Gesamtwer: " + sumPrice);
     System.out.println(stringBuilder.toString());
   }
+
 
   @Override
   public String toString() {
