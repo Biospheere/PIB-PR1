@@ -8,6 +8,15 @@ public class Buch extends Artikel {
 
   public Buch(int artikelNr, int bestand, double preis, String autor, String titel, String verlag) {
     super(artikelNr, "Medien", bestand, preis);
+    if (titel == null || titel.isBlank()) {
+      throw new IllegalArgumentException("Titel darf nicht null sein");
+    }
+    if (autor == null || autor.isBlank()) {
+      throw new IllegalArgumentException("Autor darf nicht null sein");
+    }
+    if (verlag == null || verlag.isBlank()) {
+      throw new IllegalArgumentException("Verlag darf nicht null sein");
+    }
     this.titel = titel;
     this.autor = autor;
     this.verlag = verlag;
@@ -23,38 +32,14 @@ public class Buch extends Artikel {
     return titel;
   }
 
-  /** @param titel the titel to set */
-  public void setTitel(String titel) {
-    if (titel == null || titel.isBlank()) {
-      throw new IllegalArgumentException("Titel darf nicht null sein");
-    }
-    this.titel = titel;
-  }
-
   /** @return the autor */
   public String getAutor() {
     return autor;
   }
 
-  /** @param autor the autor to set */
-  public void setAutor(String autor) {
-    if (autor == null || autor.isBlank()) {
-      throw new IllegalArgumentException("Autor darf nicht null sein");
-    }
-    this.autor = autor;
-  }
-
   /** @return the verlag */
   public String getVerlag() {
     return verlag;
-  }
-
-  /** @param verlag the verlag to set */
-  public void setVerlag(String verlag) {
-    if (verlag == null || verlag.isBlank()) {
-      throw new IllegalArgumentException("Verlag darf nicht null sein");
-    }
-    this.verlag = verlag;
   }
 
   @Override

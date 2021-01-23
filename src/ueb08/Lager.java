@@ -122,7 +122,6 @@ public class Lager {
     System.out.println(stringBuilder.toString());
   }
 
-
   @Override
   public String toString() {
     final StringBuilder stringBuilder = new StringBuilder();

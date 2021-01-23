@@ -9,6 +9,15 @@ public class CD extends Artikel {
   public CD(
       int artikelNr, int bestand, double preis, String interpret, String titel, int anzahlTitel) {
     super(artikelNr, "Medien", bestand, preis);
+    if (interpret == null || interpret.isBlank()) {
+      throw new IllegalArgumentException("Interpret darf nicht null sein");
+    }
+    if (titel == null || titel.isBlank()) {
+      throw new IllegalArgumentException("Titel darf nicht null sein");
+    }
+    if (anzahlTitel == 0) {
+      throw new IllegalArgumentException("CD darf nicht leer sein");
+    }
     this.interpret = interpret;
     this.titel = titel;
     this.anzahlTitel = anzahlTitel;
@@ -24,38 +33,14 @@ public class CD extends Artikel {
     return interpret;
   }
 
-  /** @param interpret the interpret to set */
-  public void setInterpret(String interpret) {
-    if (interpret == null || interpret.isBlank()) {
-      throw new IllegalArgumentException("Interpret darf nicht null sein");
-    }
-    this.interpret = interpret;
-  }
-
   /** @return the titel */
   public String getTitel() {
     return titel;
   }
 
-  /** @param titel the titel to set */
-  public void setTitel(String titel) {
-    if (titel == null || titel.isBlank()) {
-      throw new IllegalArgumentException("Titel darf nicht null sein");
-    }
-    this.titel = titel;
-  }
-
   /** @return the anzahlTitel */
   public int getAnzahlTitel() {
     return anzahlTitel;
-  }
-
-  /** @param anzahlTitel the anzahlTitel to set */
-  public void setAnzahlTitel(int anzahlTitel) {
-    if (anzahlTitel == 0) {
-      throw new IllegalArgumentException("CD darf nicht leer sein");
-    }
-    this.anzahlTitel = anzahlTitel;
   }
 
   @Override
